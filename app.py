@@ -9,9 +9,17 @@ from google.oauth2.service_account import Credentials
 PRICE_PER_CLIENT = 25.00
 COST_PER_CLIENT = 10.00
 
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+
 service_account_info = json.loads(st.secrets["GCP_SERVICE_ACCOUNT_JSON"])
 
-credentials = Credentials.from_service_account_info(service_account_info)
+credentials = Credentials.from_service_account_info(
+    service_account_info,
+    scopes=SCOPES
+)
 
 gc = gspread.authorize(credentials)
 
