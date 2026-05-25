@@ -3,11 +3,17 @@ import pandas as pd
 import gspread
 import plotly.express as px
 from datetime import datetime, timedelta
+from google.oauth2.service_account import Credentials
 
 PRICE_PER_CLIENT = 25.00
 COST_PER_CLIENT = 10.00
 
-gc = gspread.service_account(filename="credentials.json")
+credentials = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"]
+)
+
+gc = gspread.authorize(credentials)
+
 spreadsheet = gc.open("subscription_sales")
 clients_sheet = spreadsheet.worksheet("clients")
 
