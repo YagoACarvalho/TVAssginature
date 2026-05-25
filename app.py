@@ -8,8 +8,12 @@ from google.oauth2.service_account import Credentials
 PRICE_PER_CLIENT = 25.00
 COST_PER_CLIENT = 10.00
 
+service_account_info = dict(st.secrets["gcp_service_account"])
+
+service_account_info["private_key"] = service_account_info["private_key"].replace("\\n", "\n")
+
 credentials = Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"]
+    service_account_info
 )
 
 gc = gspread.authorize(credentials)
