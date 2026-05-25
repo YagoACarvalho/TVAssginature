@@ -3,18 +3,15 @@ import pandas as pd
 import gspread
 import plotly.express as px
 from datetime import datetime, timedelta
+import json
 from google.oauth2.service_account import Credentials
 
 PRICE_PER_CLIENT = 25.00
 COST_PER_CLIENT = 10.00
 
-service_account_info = dict(st.secrets["gcp_service_account"])
+service_account_info = json.loads(st.secrets["GCP_SERVICE_ACCOUNT_JSON"])
 
-service_account_info["private_key"] = service_account_info["private_key"].replace("\\n", "\n")
-
-credentials = Credentials.from_service_account_info(
-    service_account_info
-)
+credentials = Credentials.from_service_account_info(service_account_info)
 
 gc = gspread.authorize(credentials)
 
